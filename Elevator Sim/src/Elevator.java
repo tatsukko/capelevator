@@ -7,11 +7,11 @@ public class Elevator {
 	private ArrayList<Floor> floorList;
 	private int totalCapacity;
 	public int id;
-	public Elevator(ArrayList<Floor> fl, int cap)
+	public Elevator(ArrayList<Floor> fl, int cap, int id)
 	{
 		totalCapacity = cap;
 		floorList = fl;
-		id = 0;
+		this.id = id;
 	}
 	Floor getCurrentDestination()
 	{
