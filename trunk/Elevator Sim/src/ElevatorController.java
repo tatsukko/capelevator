@@ -4,18 +4,20 @@ public class ElevatorController {
 	public static void main(String args[])
 	{
 		Date date = new Date();
-		Calendar c = Calendar();
+		//Calendar c = new Calendar.getInstance();
 		simpack.SimEvent event = new SimEvent();
-		Sim.init(Calendar.get(Calendar.SECOND),Const.HEAP);
+		long inittime = System.currentTimeMillis();
+		Sim.init(inittime,Const.HEAP);
 		event.id = 0;
-		Sim.schedule(event,3);
+		Sim.schedule(event,3000);
 		event.id = 1;
-		Sim.schedule(event,5);
+		Sim.schedule(event,5000);
 		while(true)
 		{
-			event = Sim.next_event(c.get(Calendar.SECOND));
+			event = Sim.next_event(System.currentTimeMillis(),Const.SYNC);
 			if(event.id!=-1)
-				System.out.println("event " + event.id);
-		}
+				System.out.println("event " + event.id + " at " + (System.currentTimeMillis()-inittime)/1000);
+		}  
 	}
 }
+ 
