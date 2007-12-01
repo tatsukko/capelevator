@@ -1,4 +1,10 @@
-
+import java.util.*;
 public class Floor {
-	double floorNumber;
+	public double floorNumber;
+	public ArrayList<Elevator> elevatorList;
+	public Floor(ArrayList<Elevator> el, double fn)
+	{
+		floorNumber = fn;
+		elevatorList = el;
+	}
 }

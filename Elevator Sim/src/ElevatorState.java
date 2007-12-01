@@ -4,7 +4,19 @@ public class ElevatorState {
 	private Floor currentLocation;
 	private java.util.ArrayList<Floor> pressedFloors;
 	private int capacity;
+	public enum DirectionState {IDLE, GOINGUP, GOINGDOWN };
+	public enum CapacityState { NOTFULL, FULL };
+	public DirectionState directionState;
+	public CapacityState capacityState;
 	
+	public ElevatorState()
+	{
+		pressedFloors = new ArrayList<Floor>();
+		capacity = 0;
+		directionState = DirectionState.IDLE;
+		capacityState = CapacityState.NOTFULL;
+		
+	}
 	public void setCurrentDestination(Floor f)
 	{
 		currentDestination = f;
