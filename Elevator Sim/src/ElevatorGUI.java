@@ -56,7 +56,7 @@ class ElevatorGUI extends JFrame implements ActionListener{
 
 	}
   	public void actionPerformed(ActionEvent e){
-
+  		System.out.println("Action Performed");
 	}
 	
     private static void createGUI() {

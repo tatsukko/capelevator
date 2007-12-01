@@ -22,5 +22,9 @@ public class ElevatorSim {
 		inittime = System.currentTimeMillis();
 		Sim.init(inittime, Const.HEAP);
 	}
+	public static void main(String args[])
+	{
+		
+	}
 	
 }
