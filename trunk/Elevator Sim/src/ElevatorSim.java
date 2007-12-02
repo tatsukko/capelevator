@@ -24,6 +24,11 @@ public class ElevatorSim {
 		{
 			int current = (int)(Math.random()*floors);
 			int destination = (int)(Math.random()*floors);
+			if(destination==current)
+			{
+				i--;
+				continue;
+			}
 			Person p = new Person(flist.get(current), flist.get(destination));
 			flist.get(current).addPerson(p);
 		}
@@ -34,8 +39,8 @@ public class ElevatorSim {
 	}
 	public static void main(String args[])
 	{
-		System.out.println("doing test simulation with 10 floors, 3 elevators, and 30 people");
-		ElevatorSim esim = new ElevatorSim(10, 3, 30);
+		System.out.println("doing test simulation with 5 floors, 2 elevators, and 3 people");
+		ElevatorSim esim = new ElevatorSim(5, 2, 3);
 		System.out.println("initial state");
 		for(Elevator elevator:esim.elist)
 		{
