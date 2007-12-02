@@ -1,13 +1,13 @@
 import java.util.*;
 import simpack.*;
 public class Floor {
-	public double floorNumber;
+	public int floorNumber;
 	public ArrayList<Elevator> elevatorList;
 	public ArrayList<Person>	pList;
 	public boolean up;
 	public boolean down;
 	SimEvent event;
-	public Floor(ArrayList<Elevator> el, double fn)
+	public Floor(ArrayList<Elevator> el, int fn)
 	{
 		floorNumber = fn;
 		elevatorList = el;

@@ -14,6 +14,7 @@ public class Elevator {
 		floorList = fl;
 		this.id = id;
 		pList = new ArrayList<Person>();
+		state = new ElevatorState(fl.get(0));
 	}
 	Floor getCurrentDestination()
 	{
@@ -33,10 +34,21 @@ public class Elevator {
 	}
 	void goTo(Floor fl)
 	{
-		System.out.println("Elevator " + id + " told to go to floor " + fl.floorNumber);
+		this.state.getPressedFloors().add(fl);
+		System.out.println("Elevator " + id + " told to go to floor " + fl.floorNumber + ", current floor " + this.getCurrentFloor().floorNumber);
 		SimEvent event = new SimEvent();
 		event.id = ElevatorEvent.ELEVATORARRIVED;
-		Sim.schedule(event,Math.abs(fl.floorNumber-state.getCurrentLocation().floorNumber));
+		Sim.schedule(event,5);//Math.abs(fl.floorNumber-state.getCurrentLocation().floorNumber));
+	}
+	public void update()
+	{
+		if(this.state.getPressedFloors().isEmpty())
+			this.state.directionState = ElevatorState.DirectionState.IDLE;
+		else if(this.state.getPressedFloors().get(0).floorNumber>this.getCurrentFloor().floorNumber)
+			this.state.directionState = ElevatorState.DirectionState.GOINGUP;
+		else if(this.state.getPressedFloors().get(0).floorNumber<this.getCurrentFloor().floorNumber)
+			this.state.directionState = ElevatorState.DirectionState.GOINGDOWN;
+		else System.out.println(""+this.state.getPressedFloors().get(0).floorNumber);
 	}
 	Floor getCurrentFloor()
 	{
