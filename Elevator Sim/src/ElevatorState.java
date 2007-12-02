@@ -3,7 +3,7 @@ public class ElevatorState {
 	private Floor currentLocation;
 	private java.util.ArrayList<Floor> pressedFloors;
 	private int capacity;
-	public enum DirectionState {IDLE, GOINGUP, GOINGDOWN };
+	public enum DirectionState {IDLE, GOINGUP, GOINGDOWN, BUSY };
 	public enum CapacityState { NOTFULL, FULL };
 	public DirectionState directionState;
 	public CapacityState capacityState;
@@ -25,12 +25,51 @@ public class ElevatorState {
 	public Floor getCurrentDestination()
 	{
 		Floor selected = null;
-		for(Floor f: pressedFloors)
+		System.out.println("Finding current destination");
+		System.out.println("Current location is " + currentLocation.floorNumber);
+		
+		if(directionState == DirectionState.GOINGUP)
 		{
-			if(f.floorNumber>currentLocation.floorNumber&&(selected == null||f.floorNumber<selected.floorNumber))
-				selected=f;
+			for(Floor f: pressedFloors)
+			{
+				System.out.println(f.floorNumber);
+				if(f.floorNumber>=currentLocation.floorNumber&&(selected == null||f.floorNumber<selected.floorNumber))
+					selected=f;
+			}
+			if(selected == null)
+			{
+				System.out.println("switching directions to find destination" );
+				directionState = DirectionState.GOINGDOWN;
+				selected = getCurrentDestination();
+				
+			}
+			System.out.println(selected.floorNumber + "selected");
+			return selected;
 		}
-		return selected;
+		else if(directionState == DirectionState.GOINGDOWN)
+		{
+			for(Floor f: pressedFloors)
+			{
+				System.out.println(f.floorNumber);
+				if(f.floorNumber<=currentLocation.floorNumber&&(selected == null||f.floorNumber>selected.floorNumber))
+					selected=f;
+			}
+			if(selected == null)
+			{
+				System.out.println("switching directions to find destination" );
+				directionState = DirectionState.GOINGUP;
+				selected = getCurrentDestination();
+				
+			}
+			System.out.println(selected.floorNumber + "selected");
+			return selected;
+		}
+		else 
+		{
+			System.out.println("direction err, forcing elevator to go up");
+			directionState = DirectionState.GOINGUP;
+			return getCurrentDestination();
+		}
 	}
 	
 	public void setCurrentLocation(Floor f)
@@ -58,10 +97,10 @@ public class ElevatorState {
 		capacity = f;
 	}
 	
-	public int getCurrentCapacity()
+	/*public int getCurrentCapacity()
 	{
 		return capacity;
-	}
+	}*/
 	
 	
 	

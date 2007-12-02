@@ -36,8 +36,13 @@ public class Elevator {
 	}
 	void goTo(Floor fl)
 	{
-		this.state.getPressedFloors().add(fl);
-		System.out.println("Elevator " + id + " told to go to floor " + fl.floorNumber + ", current floor " + this.getCurrentFloor().floorNumber);
+		if(!this.state.getPressedFloors().contains(fl))
+		{
+			this.state.getPressedFloors().add(fl);
+		}
+		System.out.print("Elevator " + id);
+		System.out.print(" told to go to floor " + fl.floorNumber);
+		System.out.println(", current floor " + this.getCurrentFloor().floorNumber);
 		event.id = ElevatorEvent.ELEVATORARRIVED;
 		event.token.attr[0]=this.id;
 		event.token.attr[1]=getCurrentDestination().floorNumber;
@@ -49,12 +54,14 @@ public class Elevator {
 	}
 	public void openDoors()
 	{
-		System.out.println("opening gates " + id);
-		int oldcap = this.getCurrentCapacity();
-		state.getCurrentLocation().transferPeople(this);
+		System.out.println("opening gates " + id + " at floor " + this.getCurrentFloor().floorNumber);
+		int trans = state.getCurrentLocation().transferPeople(this);
+		System.out.print("after people transfered current destination is ");
+		System.out.print(this.getCurrentDestination().floorNumber);
 		event.id=ElevatorEvent.ELEVATORLEFT;
 		event.token.attr[0]=this.id;
-		Sim.schedule(event, ElevatorConst.ELEVATOR_ENTRY*(this.getCurrentCapacity()-oldcap)+
+		this.state.directionState = ElevatorState.DirectionState.BUSY;
+		Sim.schedule(event, ElevatorConst.ELEVATOR_ENTRY*(trans)+
 				ElevatorConst.ELEVATOR_OPEN + ElevatorConst.ELEVATOR_CLOSE);
 		for(Person p:pList)
 		{
@@ -81,7 +88,7 @@ public class Elevator {
 	}
 	int	getCurrentCapacity()
 	{
-		return	state.getCurrentCapacity();
+		return	pList.size();
 	}
 	int	getTotalCapacity()
 	{
