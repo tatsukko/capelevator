@@ -8,6 +8,7 @@ public class Elevator {
 	public ArrayList<Person> pList;
 	private int totalCapacity;
 	public int id;
+	private SimEvent event;
 	public Elevator(ArrayList<Floor> fl, int cap, int id)
 	{
 		totalCapacity = cap;
@@ -15,6 +16,7 @@ public class Elevator {
 		this.id = id;
 		pList = new ArrayList<Person>();
 		state = new ElevatorState(fl.get(0));
+		event = new SimEvent();
 	}
 	Floor getCurrentDestination()
 	{
@@ -36,9 +38,32 @@ public class Elevator {
 	{
 		this.state.getPressedFloors().add(fl);
 		System.out.println("Elevator " + id + " told to go to floor " + fl.floorNumber + ", current floor " + this.getCurrentFloor().floorNumber);
-		SimEvent event = new SimEvent();
 		event.id = ElevatorEvent.ELEVATORARRIVED;
-		Sim.schedule(event,5);//Math.abs(fl.floorNumber-state.getCurrentLocation().floorNumber));
+		event.token.attr[0]=this.id;
+		event.token.attr[1]=getCurrentDestination().floorNumber;
+		int traveltime = Math.abs(((this.getCurrentDestination().floorNumber)-
+				this.getCurrentFloor().floorNumber)*ElevatorConst.ELEVATOR_SPEED);
+		System.out.println("travel time is " + traveltime);
+		event.id=ElevatorEvent.ELEVATORARRIVED;
+		Sim.schedule(event, traveltime);
+	}
+	public void openDoors()
+	{
+		System.out.println("opening gates " + id);
+		int oldcap = this.getCurrentCapacity();
+		state.getCurrentLocation().transferPeople(this);
+		event.id=ElevatorEvent.ELEVATORLEFT;
+		event.token.attr[0]=this.id;
+		Sim.schedule(event, ElevatorConst.ELEVATOR_ENTRY*(this.getCurrentCapacity()-oldcap)+
+				ElevatorConst.ELEVATOR_OPEN + ElevatorConst.ELEVATOR_CLOSE);
+		for(Person p:pList)
+		{
+			if(!state.getPressedFloors().contains(p.destination))
+			{
+				state.getPressedFloors().add(p.destination);
+			}
+		}
+		
 	}
 	public void update()
 	{

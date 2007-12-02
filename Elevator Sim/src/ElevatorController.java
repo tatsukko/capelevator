@@ -44,12 +44,24 @@ public class ElevatorController {
 		Elevator selected = null;
 		for(Elevator e:elist)
 		{
-			if(e.getCurrentState().directionState==ElevatorState.DirectionState.IDLE)
+			if(e.getCurrentState().directionState == ElevatorState.DirectionState.IDLE&&
+					e.getCurrentFloor().floorNumber==event.token.attr[0])
 			{
-				e.goTo(flist.get((int)event.token.attr[0]-1));
-				e.update();
+				selected = e;
+				e.openDoors();
 				return;
 			}
+			
+			if(e.getCurrentState().directionState==ElevatorState.DirectionState.IDLE)
+			{
+				selected = e;
+				break;
+			}
+		}
+		if(selected!=null)
+		{
+			selected.goTo(flist.get((int)event.token.attr[0]-1));
+			selected.update();
 		}
 	}
 	void upPressed()
@@ -58,28 +70,48 @@ public class ElevatorController {
 		Elevator selected = null;
 		for(Elevator e:elist)
 		{
-			if(e.getCurrentState().directionState==ElevatorState.DirectionState.IDLE)
+			if(e.getCurrentState().directionState == ElevatorState.DirectionState.IDLE&&
+					e.getCurrentFloor().floorNumber==event.token.attr[0])
 			{
-				e.goTo(flist.get((int)event.token.attr[0]-1));
-				e.update();
+				selected = e;
+				e.openDoors();
 				return;
 			}
+					
+			if(e.getCurrentState().directionState==ElevatorState.DirectionState.IDLE)
+			{
+				selected = e;
+				break;
+			}
+		}
+		if(selected!=null)
+		{
+			selected.goTo(flist.get((int)event.token.attr[0]-1));
+			selected.update();
 		}
 	}
 	
 	void floorPressed()
 	{
-		
+		System.out.println("floor pressed");
 	}
 	
 	void elevatorArrived()
 	{
-		System.out.println("elevator arrived");
+		System.out.println("elevator " + event.token.attr[0] + " arrived at " + event.token.attr[1]);
+		elist.get((int)event.token.attr[0]-1).openDoors();
 	}
 	
 	void elevatorLeft()
 	{
-		
+		System.out.println("elevator left " + event.token.attr[0]);
+		elist.get((int)event.token.attr[0]-1).goTo(
+				elist.get((int)event.token.attr[0]-1).getCurrentDestination());
+		return;
+		//Elevator e = elist.get(event.id);
+		//int traveltime = (e.getCurrentDestination().floorNumber)-e.getCurrentFloor().floorNumber*ElevatorConst.ELEVATOR_SPEED;
+		//e.id=ElevatorEvent.ELEVATORARRIVED;
+		//Sim.schedule(event, 0);
 	}
 	
 	public static void main(String args[])

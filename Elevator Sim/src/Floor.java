@@ -31,6 +31,48 @@ public class Floor {
 		}
 		return sb.toString();
 	}
+	//transfer as many people into elevator that are going same direction as elevator
+	public void transferPeople(Elevator e)
+	{
+		int available = e.getTotalCapacity()-e.getCurrentState().getCurrentCapacity();
+		for(int i = 0; i < pList.size(); i++)
+		{
+			Person p = pList.get(i);
+			if(e.getCurrentState().directionState == ElevatorState.DirectionState.GOINGUP)
+			{
+				if(p.destination.floorNumber > this.floorNumber)
+				{
+					pList.remove(p);
+					p.state = Person.ELEVATOR;
+					e.pList.add(p);
+					if(!e.getFloorsRequested().contains(p.destination))
+					{
+						e.getFloorsRequested().add(p.destination);
+					}
+					available--;
+				}
+			}
+			else if(e.getCurrentState().directionState == ElevatorState.DirectionState.GOINGDOWN)
+			{
+				if(p.destination.floorNumber < this.floorNumber)
+				{
+					pList.remove(p);
+					p.state = Person.ELEVATOR;
+					e.pList.add(p);
+					if(!e.getFloorsRequested().contains(p.destination))
+					{
+						e.getFloorsRequested().add(p.destination);
+					}
+					available--;
+				}
+			}
+			if(available==0)
+			{
+				e.getCurrentState().capacityState=ElevatorState.CapacityState.FULL;
+				break;
+			}
+		}
+	}
 	//Get all the people on the floor to either exit, press up, or press down
 	public void update()
 	{
