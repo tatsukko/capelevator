@@ -1,6 +1,5 @@
 import java.util.*;
 public class ElevatorState {
-	private Floor currentDestination;
 	private Floor currentLocation;
 	private java.util.ArrayList<Floor> pressedFloors;
 	private int capacity;
@@ -19,12 +18,19 @@ public class ElevatorState {
 	}
 	public void setCurrentDestination(Floor f)
 	{
-		currentDestination = f;
+		if(!pressedFloors.contains(f))
+			pressedFloors.add(f);
 	}
 	
 	public Floor getCurrentDestination()
 	{
-		return currentDestination;
+		Floor selected = null;
+		for(Floor f: pressedFloors)
+		{
+			if(f.floorNumber>currentLocation.floorNumber&&(selected == null||f.floorNumber<selected.floorNumber))
+				selected=f;
+		}
+		return selected;
 	}
 	
 	public void setCurrentLocation(Floor f)
