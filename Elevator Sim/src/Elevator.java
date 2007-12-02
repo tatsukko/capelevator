@@ -52,5 +52,11 @@ public class Elevator {
 	{
 		return state;
 	}
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("Elevator id " + id );
+		return sb.toString();
+	}
 }
 
