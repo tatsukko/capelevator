@@ -11,6 +11,8 @@ public class ElevatorController {
 	}
 	public void control()
 	{
+		for(Floor f:flist)
+			f.update();
 		while(true)
 		{
 			event = Sim.next_event(System.currentTimeMillis(), Const.SYNC);
@@ -38,11 +40,11 @@ public class ElevatorController {
 	}
 	void downPressed()
 	{
-		
+		System.out.println("Down pressed on floor " + event.token.attr[0]);
 	}
 	void upPressed()
 	{
-		
+		System.out.println("Up pressed on floor " + event.token.attr[0]);
 	}
 	
 	void floorPressed()

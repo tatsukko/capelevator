@@ -5,6 +5,7 @@ import simpack.*;
 public class Elevator {
 	private ElevatorState state;
 	private ArrayList<Floor> floorList;
+	public ArrayList<Person> pList;
 	private int totalCapacity;
 	public int id;
 	public Elevator(ArrayList<Floor> fl, int cap, int id)
@@ -12,6 +13,7 @@ public class Elevator {
 		totalCapacity = cap;
 		floorList = fl;
 		this.id = id;
+		pList = new ArrayList<Person>();
 	}
 	Floor getCurrentDestination()
 	{
