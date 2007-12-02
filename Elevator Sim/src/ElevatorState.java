@@ -9,13 +9,13 @@ public class ElevatorState {
 	public DirectionState directionState;
 	public CapacityState capacityState;
 	
-	public ElevatorState()
+	public ElevatorState(Floor init)
 	{
 		pressedFloors = new ArrayList<Floor>();
 		capacity = 0;
 		directionState = DirectionState.IDLE;
 		capacityState = CapacityState.NOTFULL;
-		
+		currentLocation = init;		
 	}
 	public void setCurrentDestination(Floor f)
 	{

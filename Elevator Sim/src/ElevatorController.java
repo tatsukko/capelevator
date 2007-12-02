@@ -41,10 +41,30 @@ public class ElevatorController {
 	void downPressed()
 	{
 		System.out.println("Down pressed on floor " + event.token.attr[0]);
+		Elevator selected = null;
+		for(Elevator e:elist)
+		{
+			if(e.getCurrentState().directionState==ElevatorState.DirectionState.IDLE)
+			{
+				e.goTo(flist.get((int)event.token.attr[0]-1));
+				e.update();
+				return;
+			}
+		}
 	}
 	void upPressed()
 	{
 		System.out.println("Up pressed on floor " + event.token.attr[0]);
+		Elevator selected = null;
+		for(Elevator e:elist)
+		{
+			if(e.getCurrentState().directionState==ElevatorState.DirectionState.IDLE)
+			{
+				e.goTo(flist.get((int)event.token.attr[0]-1));
+				e.update();
+				return;
+			}
+		}
 	}
 	
 	void floorPressed()
@@ -54,7 +74,7 @@ public class ElevatorController {
 	
 	void elevatorArrived()
 	{
-		
+		System.out.println("elevator arrived");
 	}
 	
 	void elevatorLeft()
