@@ -13,7 +13,8 @@ public class Person {
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append((state==FLOOR?"Person at floor " + ((Floor)current).floorNumber:"Person in elevator " + ((Elevator)current).id)+ " heading to " + destination.floorNumber);
+		sb.append((state==FLOOR?"Person at floor " + ((Floor)current).floorNumber:
+			"Person in elevator " + ((Elevator)current).id)+ " heading to " + destination.floorNumber);
 		return sb.toString();
 	}
 }
