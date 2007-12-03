@@ -27,7 +27,8 @@ public class ElevatorState {
 		Floor selected = null;
 		System.out.println("Finding current destination");
 		System.out.println("Current location is " + currentLocation.floorNumber);
-		
+		if(pressedFloors.size()==0)
+			return null;
 		if(directionState == DirectionState.GOINGUP)
 		{
 			for(Floor f: pressedFloors)

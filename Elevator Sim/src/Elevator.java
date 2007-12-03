@@ -55,7 +55,19 @@ public class Elevator {
 	public void openDoors()
 	{
 		System.out.println("opening gates " + id + " at floor " + this.getCurrentFloor().floorNumber);
+		this.getCurrentState().getPressedFloors().remove(this.getCurrentFloor());
 		int trans = state.getCurrentLocation().transferPeople(this);
+		if(trans==0&&pList.size()==0)
+		{
+			System.out.println("empty and no one wants in, switching direction ");
+			if(this.getCurrentState().directionState==ElevatorState.DirectionState.GOINGUP)
+				this.getCurrentState().directionState = ElevatorState.DirectionState.GOINGDOWN;
+			else if(this.getCurrentState().directionState==ElevatorState.DirectionState.GOINGDOWN)
+				this.getCurrentState().directionState = ElevatorState.DirectionState.GOINGUP;
+			else System.out.println("weird state " + this.getCurrentState().directionState);
+			trans = state.getCurrentLocation().transferPeople(this);
+			
+		}
 		System.out.print("after people transfered current destination is ");
 		System.out.print(this.getCurrentDestination().floorNumber);
 		event.id=ElevatorEvent.ELEVATORLEFT;
