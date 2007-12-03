@@ -14,7 +14,7 @@ public class Floor {
 		pList = new ArrayList<Person>();
 		up = false;
 		down = false;
-		event = new SimEvent();
+		event = new SimEvent(); 
 	}
 	
 	public void addPerson(Person p)
@@ -40,6 +40,7 @@ public class Floor {
 			Person p = e.pList.get(i);
 			if(p.destination.floorNumber == this.floorNumber)
 			{
+				System.out.println("person leaving elevator " + e.id + " on floor " + this.floorNumber);
 				e.pList.remove(i);
 				i--;
 			}
@@ -68,6 +69,8 @@ public class Floor {
 			{
 				if(p.destination.floorNumber > this.floorNumber)
 				{
+					System.out.println("person entering elevator " + e.id + " from floor " + this.floorNumber + 
+							" destination is " + p.destination.floorNumber);
 					pList.remove(p);
 					p.state = Person.ELEVATOR;
 					e.pList.add(p);
@@ -82,6 +85,8 @@ public class Floor {
 			{
 				if(p.destination.floorNumber < this.floorNumber)
 				{
+					System.out.println("person entering elevator " + e.id + " from floor " + this.floorNumber + 
+							" destination is " + p.destination.floorNumber);
 					pList.remove(p);
 					p.state = Person.ELEVATOR;
 					e.pList.add(p);
