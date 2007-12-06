@@ -50,6 +50,7 @@ public class ElevatorSim {
 		{
 			System.out.println(floor);
 		}
+		System.out.println("---------------------");
 		esim.controller.control();
 	}
 	
