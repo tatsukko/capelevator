@@ -34,23 +34,23 @@ public class ElevatorSim {
 		}
 		inittime = System.currentTimeMillis();
 		Sim.init(inittime, Const.HEAP);
-		
+		System.out.println("initial state");
+		for(Elevator elevator:elist)
+		{
+			System.out.println(elevator);
+		}
+		for(Floor floor:flist)
+		{
+			System.out.println(floor);
+		}
+		System.out.println("---------------------");
 		controller = new ElevatorController(elist, flist);
 	}
 	public static void main(String args[])
 	{
 		System.out.println("doing test simulation with 5 floors, 2 elevators, and 3 people");
 		ElevatorSim esim = new ElevatorSim(5, 2, 3);
-		System.out.println("initial state");
-		for(Elevator elevator:esim.elist)
-		{
-			System.out.println(elevator);
-		}
-		for(Floor floor:esim.flist)
-		{
-			System.out.println(floor);
-		}
-		System.out.println("---------------------");
+		
 		esim.controller.control();
 	}
 	

@@ -26,6 +26,9 @@ class ElevatorGUI extends JFrame implements ActionListener{
   	public JTextField jtfFloor;
   	public JTextField jtfElevator;
   	public JButton apply = new JButton("Apply");
+  	public ArrayList<Elevator> elist;
+  	public ArrayList<Floor> flist;
+  	public ElevatorSim esim;
   	
 	public ElevatorGUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,9 +120,10 @@ class jpElevator extends JPanel{
         setBackground(Color.gray);
         BufferedImage img = null;
 		try {
-			File f = new File("c:/person.gif");
+			File f = new File("person.gif");
     		image_person = ImageIO.read(f);
 		} catch (IOException e) {
+			System.out.println("error reading gif "+ e);
 		}
 	}
 	
@@ -168,6 +172,7 @@ class Selection extends JPanel{
 	public static int numFloors, numElevators;
   	public JButton extra = new JButton("ExtraB");
   	public JButton apply = new JButton("Apply");
+  	public ElevatorSim esim;
 	public Selection(){
 		//super(new BorderLayout());
 		setPreferredSize(new Dimension(200,100));
@@ -180,67 +185,36 @@ class Selection extends JPanel{
         	//JPanel controlPane = new JPanel();
 
         cFloor.setSelectedIndex(0);
-        cFloor.addActionListener(new ActionListener() {
+      /*  cFloor.addActionListener(new ActionListener() {
             		public void actionPerformed(ActionEvent e) {
                 		String num = (String)cFloor.getSelectedItem();
-                		if (num.equals("1"))
-                    			numFloors=1;
-                		else if (num.equals("2"))
-                    			numFloors=2;
-                		else if (num.equals("3"))
-                    			numFloors=3;
-                		else if (num.equals("4"))
-                    			numFloors=4;
-                		else if (num.equals("5"))
-                    			numFloors=5;
-                		else if (num.equals("6"))
-                    			numFloors=6;
-                		else if (num.equals("6"))
-                    			numFloors=6;
-                		else if (num.equals("7"))
-                    			numFloors=7;
-                		else if (num.equals("8"))
-                    			numFloors=8;
-                		else if (num.equals("9"))
-                    			numFloors=9;
-            		}
-        	});
+                		numFloors=Integer.parseInt(num);
+                    }
+        	});*/
 
 		cElevator.setSelectedIndex(0);
-        cElevator.addActionListener(new ActionListener() {
+      /*  cElevator.addActionListener(new ActionListener() {
             		public void actionPerformed(ActionEvent e) {
                 		String num = (String)cElevator.getSelectedItem();
-                		if (num.equals("1"))
-                    			numElevators=1;
-                		else if (num.equals("2"))
-                    			numElevators=2;
-                		else if (num.equals("3"))
-                    			numElevators=3;
-                		else if (num.equals("4"))
-                    			numElevators=4;
-                		else if (num.equals("5"))
-                    			numElevators=5;
-                		else if (num.equals("6"))
-                    			numElevators=6;
-                		else if (num.equals("6"))
-                    			numElevators=6;
-                		else if (num.equals("7"))
-                    			numElevators=7;
-                		else if (num.equals("8"))
-                    			numElevators=8;
-                		else if (num.equals("9"))
-                    			numElevators=9;
+                		numElevators=Integer.parseInt(num);
             		}
-        	});
+        	});*/
 
 		setLayout(new GridLayout(3,2));
 		add(new JLabel("# of Floors:"));
         add(cFloor);
 		add(new JLabel("# of Elevators:"));
         add(cElevator);
-		add(extra);
+		//add(extra);
 		add(apply);
+		apply.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent e) {
+    			esim = new ElevatorSim(Integer.parseInt((String)cFloor.getSelectedItem()),
+    					Integer.parseInt((String)cElevator.getSelectedItem()),3*Integer.parseInt((String)cFloor.getSelectedItem()));
+    			esim.controller.control();
+    		}
 
+		});
 	}
 /*
 	private static void createAndShowGUI() {
