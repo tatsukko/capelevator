@@ -201,10 +201,11 @@ class Selection extends JPanel{
 		//super(new BorderLayout());
 		setPreferredSize(new Dimension(200,100));
         setBackground(Color.white);
-		String[] floor = { "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+		String[] floor = {"2", "3", "4", "5", "6", "7", "8", "9"};
 		//Integer[] floor = {1,2,3,4,5,6,7,8,0};
 		String[] elevator = { "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-		String[] person = { "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+		String[] person = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", 
+				"20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"};
 
 		final JComboBox cFloor = new JComboBox(floor);
 		final JComboBox cElevator = new JComboBox(elevator);
