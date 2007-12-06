@@ -4,9 +4,13 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
+//import java.awt.Font;
+//import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import javax.imageio.*;
+import java.io.*;
 import java.awt.TextComponent.*;
 import java.util.*;
 
@@ -105,10 +109,18 @@ class ElevatorGUI extends JFrame implements ActionListener{
 class jpElevator extends JPanel{
 	public JButton up = new JButton("up");
 	public JButton down = new JButton("down");
+	private BufferedImage image_person;
+	//public int x,y;
 	
 	public jpElevator(){
 		setPreferredSize(new Dimension(300,500));
         setBackground(Color.gray);
+        BufferedImage img = null;
+		try {
+			File f = new File("c:/person.gif");
+    		image_person = ImageIO.read(f);
+		} catch (IOException e) {
+		}
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -122,10 +134,33 @@ class jpElevator extends JPanel{
         g2d.setColor(Color.BLACK);
         g2d.fillRect(30,400,50,50);
         g2d.drawLine(0,400,300,400);
+        
+        g2d.clearRect(250, 400, 20, 40);
+        g.drawImage(image_person, 250, 400, null);
+        
         //up.setPreferredSize(new Dimension(10,5));
         //add(up);
         //down.setPreferredSize(new Dimension(10,5));
         //add(down);
+        
+        /*int centerX = 5 / 2;  //getWidth()=5,getHeight()=10
+    	int hipsHeight = 10 / 3;
+    	int hipsY = 10 - hipsHeight;
+    	int neckY = hipsY - 10 / 3;
+    	int armsY = 10 - 10 / 2;
+    	int headX = 5 / 2 - 10 / 6;
+    
+    	g.setColor(Color.white);
+    	// draw legs
+    	g.drawLine(0, 10, centerX, hipsY);
+    	g.drawLine(centerX, hipsY, 5, 10);
+    	//draw torso
+    	g.drawLine(centerX, hipsY, centerX, neckY);
+    	// draw arms
+    	g.drawLine(0, armsY, 5, armsY);
+    	// draw head
+    	g.fillOval(headX, 0, 5/3, 10/3);
+    	*/
 
     }
 } //end of jpElevator class
