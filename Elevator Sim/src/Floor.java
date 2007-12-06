@@ -41,7 +41,9 @@ public class Floor {
 			if(p.destination.floorNumber == this.floorNumber)
 			{
 				System.out.println("person leaving elevator " + e.id + " on floor " + this.floorNumber);
+				e.pList.get(i).exit();
 				e.pList.remove(i);
+				e.getCurrentState().capacityState=ElevatorState.CapacityState.NOTFULL;
 				i--;
 			}
 		}
@@ -73,6 +75,7 @@ public class Floor {
 					System.out.println("person entering elevator " + e.id + " from floor " + this.floorNumber + 
 							" destination is " + p.destination.floorNumber);
 					pList.remove(p);
+					p.enter();
 					i--;
 					p.state = Person.ELEVATOR;
 					e.pList.add(p);
@@ -90,6 +93,8 @@ public class Floor {
 					System.out.println("person entering elevator " + e.id + " from floor " + this.floorNumber + 
 							" destination is " + p.destination.floorNumber);
 					pList.remove(p);
+					p.enter();
+					i--;
 					p.state = Person.ELEVATOR;
 					e.pList.add(p);
 					if(!e.getFloorsRequested().contains(p.destination))

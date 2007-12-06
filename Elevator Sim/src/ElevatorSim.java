@@ -6,8 +6,10 @@ public class ElevatorSim {
 	ArrayList<Floor> flist;
 	ElevatorController controller;
 	long inittime;
+	static ElevatorGUI egui;
 	public ElevatorSim(int floors, int elevators, int people)
 	{
+		ElevatorGUI.esim=this;
 		System.out.println("Constructing simulation with " + floors + " floors, " 
 				+ elevators + " elevators, and " + people + " people");
 		elist = new ArrayList<Elevator>();
@@ -29,9 +31,11 @@ public class ElevatorSim {
 				i--;
 				continue;
 			}
-			Person p = new Person(flist.get(current), flist.get(destination));
+			Person p = new Person(flist.get(current), flist.get(destination),i+1);
+			p.start();
 			flist.get(current).addPerson(p);
 		}
+		
 		inittime = System.currentTimeMillis();
 		Sim.init(inittime, Const.HEAP);
 		System.out.println("initial state");
@@ -44,14 +48,13 @@ public class ElevatorSim {
 			System.out.println(floor);
 		}
 		System.out.println("---------------------");
+		
 		controller = new ElevatorController(elist, flist);
 	}
+	
 	public static void main(String args[])
 	{
-		System.out.println("doing test simulation with 5 floors, 2 elevators, and 3 people");
-		ElevatorSim esim = new ElevatorSim(5, 2, 3);
+		egui = ElevatorGUI.createGUI();
 		
-		esim.controller.control();
 	}
-	
 }
