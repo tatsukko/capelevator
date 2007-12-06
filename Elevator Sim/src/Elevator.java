@@ -132,7 +132,7 @@ public class Elevator {
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("Elevator id " + id );
+		sb.append("Elevator id " + id + " at floor " + this.state.getCurrentLocation().floorNumber );
 		if(pList.size()==0)
 		{
 			return sb.toString();
