@@ -103,11 +103,12 @@ public class Floor {
 			if(available==0)
 			{
 				e.getCurrentState().capacityState=ElevatorState.CapacityState.FULL;
+				System.out.println("Elevator " + e.id + " is now full");
 				break;
 			}
 		}
 		transfered-=this.pList.size();
-		System.out.println("transfered " + transfered + " on floor " + this.floorNumber + " plist size is " + pList.size());
+		System.out.println("transfered " + transfered + " on floor " + this.floorNumber + " number of people still on floor is " + pList.size());
 		return transfered;
 	}
 	//Get all the people on the floor to either exit, press up, or press down

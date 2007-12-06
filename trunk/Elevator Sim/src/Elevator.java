@@ -36,8 +36,11 @@ public class Elevator {
 	}
 	void goTo(Floor fl)
 	{
-		if(fl.pList.size()==0)
+		if(fl.pList.size()==0&&this.pList.size()==0)
+		{
+			System.out.println("Told to go to empty floor " + fl.floorNumber + " when elevator " + this.id + " is empty");
 			return;
+		}
 		//System.out.println("goto");
 		if(!this.state.getPressedFloors().contains(fl) && fl.floorNumber!=this.state.getCurrentLocation().floorNumber)
 		{
@@ -83,7 +86,7 @@ public class Elevator {
 			
 		}
 		System.out.print("after people transfered current destination is ");
-		System.out.print(this.getCurrentDestination().floorNumber);
+		System.out.println(this.getCurrentDestination().floorNumber);
 		event.id=ElevatorEvent.ELEVATORLEFT;
 		event.token.attr[0]=this.id;
 		this.state.directionState = ElevatorState.DirectionState.BUSY;
