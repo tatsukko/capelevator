@@ -14,8 +14,13 @@ public class ElevatorController {
 		for(Floor f:flist)
 			f.update();
 		do
-		{
+		{	
 			event = Sim.next_event(System.currentTimeMillis(), Const.SYNC);
+			if(Sim.heap_count==0)
+			{
+				for(Floor f:flist)
+					f.update();
+			}
 			switch(event.id){
 			case -1:
 				continue;
