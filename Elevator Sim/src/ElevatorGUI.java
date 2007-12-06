@@ -26,9 +26,7 @@ class ElevatorGUI extends JFrame implements ActionListener{
   	public JTextField jtfFloor;
   	public JTextField jtfElevator;
   	public JButton apply = new JButton("Apply");
-  	//public ArrayList<Elevator> elist;
-  	public ArrayList<Floor> flist;
-  	public ArrayList<Person> pList;
+  	public JTextArea text = new JTextArea(300,500);
   	public static ElevatorSim esim;
   	
 	public ElevatorGUI() {
@@ -58,8 +56,11 @@ class ElevatorGUI extends JFrame implements ActionListener{
 		splitPane.add(selection);
 		Container container = getContentPane();	
 		container.setLayout(new BorderLayout());
-		//container.add(elevator, BorderLayout.WEST);
 		container.add(splitPane, BorderLayout.EAST);
+		container.add(text, BorderLayout.WEST);
+		text.append("Elevator Simulation\nMade by Danial Afzal and Kiyo Iwataki for CAP 4800\n"+
+  			"To run, simply select the amount of floors, elevators, \nand people to simulate");
+		
 		//container.add(selection, BorderLayout.SOUTH);
 		//container.add(jpTable, BorderLayout.EAST);
 
@@ -68,6 +69,12 @@ class ElevatorGUI extends JFrame implements ActionListener{
   		System.out.println("Action Performed");
 	}
 	
+  	public void update()
+  	{
+  		text.setText(esim.toString());
+  		text.append("");
+  		text.paintImmediately(new Rectangle(290,490));
+  	}
     public static ElevatorGUI createGUI() {
         //Create the GUI window.
         ElevatorGUI gui = new ElevatorGUI();
