@@ -25,49 +25,52 @@ public class ElevatorState {
 	public Floor getCurrentDestination()
 	{
 		Floor selected = null;
-		System.out.println("Finding current destination");
-		System.out.println("Current location is " + currentLocation.floorNumber);
+		//System.out.println("Finding current destination");
+		//System.out.println("Current location is " + currentLocation.floorNumber);
 		if(pressedFloors.size()==0)
-			return null;
+		{
+			directionState = DirectionState.IDLE;
+			return getCurrentLocation();
+		}
 		if(directionState == DirectionState.GOINGUP)
 		{
 			for(Floor f: pressedFloors)
 			{
-				System.out.println(f.floorNumber);
+				//System.out.println(f.floorNumber);
 				if(f.floorNumber>=currentLocation.floorNumber&&(selected == null||f.floorNumber<selected.floorNumber))
 					selected=f;
 			}
 			if(selected == null)
 			{
-				System.out.println("switching directions to find destination" );
+				//System.out.println("switching directions to find destination" );
 				directionState = DirectionState.GOINGDOWN;
 				selected = getCurrentDestination();
 				
 			}
-			System.out.println(selected.floorNumber + "selected");
+			//System.out.println(selected.floorNumber + "selected");
 			return selected;
 		}
 		else if(directionState == DirectionState.GOINGDOWN)
 		{
 			for(Floor f: pressedFloors)
 			{
-				System.out.println(f.floorNumber);
+				//System.out.println(f.floorNumber);
 				if(f.floorNumber<=currentLocation.floorNumber&&(selected == null||f.floorNumber>selected.floorNumber))
 					selected=f;
 			}
 			if(selected == null)
 			{
-				System.out.println("switching directions to find destination" );
+				//System.out.println("switching directions to find destination" );
 				directionState = DirectionState.GOINGUP;
 				selected = getCurrentDestination();
 				
 			}
-			System.out.println(selected.floorNumber + "selected");
+			//System.out.println(selected.floorNumber + "selected");
 			return selected;
 		}
 		else 
 		{
-			System.out.println("direction err, forcing elevator to go up");
+			//System.out.println("direction err, forcing elevator to go up");
 			directionState = DirectionState.GOINGUP;
 			return getCurrentDestination();
 		}

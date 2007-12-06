@@ -36,9 +36,23 @@ public class Elevator {
 	}
 	void goTo(Floor fl)
 	{
-		if(!this.state.getPressedFloors().contains(fl))
+		if(fl.pList.size()==0)
+			return;
+		//System.out.println("goto");
+		if(!this.state.getPressedFloors().contains(fl) && fl.floorNumber!=this.state.getCurrentLocation().floorNumber)
 		{
 			this.state.getPressedFloors().add(fl);
+			this.state.getCurrentDestination();
+		}
+		
+		if(this.state.directionState==ElevatorState.DirectionState.IDLE)
+		{
+			System.out.println("Elevator e " + this.id + " is now idle");
+			for(Floor f:floorList)
+			{
+				f.update();
+			}	
+			return;
 		}
 		System.out.print("Elevator " + id);
 		System.out.print(" told to go to floor " + fl.floorNumber);

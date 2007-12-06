@@ -50,12 +50,12 @@ public class Floor {
 		int available = e.getTotalCapacity()-e.getCurrentCapacity();
 		if(e.getCurrentState().directionState == ElevatorState.DirectionState.IDLE)
 		{
-			if(pList.get(0).destination.floorNumber>this.floorNumber)
+			if(pList.size()!=0&&pList.get(0).destination.floorNumber>this.floorNumber)
 			{
 				System.out.println(e.id + " Now going up");
 				e.getCurrentState().directionState = ElevatorState.DirectionState.GOINGUP;
 			}
-			else if(pList.get(0).destination.floorNumber<this.floorNumber)
+			else if(pList.size()!=0&&pList.get(0).destination.floorNumber<this.floorNumber)
 			{
 				System.out.println(e.id + " Now going down");
 				e.getCurrentState().directionState = ElevatorState.DirectionState.GOINGDOWN;
@@ -64,6 +64,7 @@ public class Floor {
 		}
 		for(int i = 0; i < pList.size(); i++)
 		{
+			
 			Person p = pList.get(i);
 			if(e.getCurrentState().directionState == ElevatorState.DirectionState.GOINGUP)
 			{
@@ -72,6 +73,7 @@ public class Floor {
 					System.out.println("person entering elevator " + e.id + " from floor " + this.floorNumber + 
 							" destination is " + p.destination.floorNumber);
 					pList.remove(p);
+					i--;
 					p.state = Person.ELEVATOR;
 					e.pList.add(p);
 					if(!e.getFloorsRequested().contains(p.destination))
@@ -105,7 +107,7 @@ public class Floor {
 			}
 		}
 		transfered-=this.pList.size();
-		System.out.println("transfered " + transfered + " on floor " + this.floorNumber);
+		System.out.println("transfered " + transfered + " on floor " + this.floorNumber + " plist size is " + pList.size());
 		return transfered;
 	}
 	//Get all the people on the floor to either exit, press up, or press down
