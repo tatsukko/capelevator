@@ -51,6 +51,8 @@ public class Elevator {
 		if(this.state.directionState==ElevatorState.DirectionState.IDLE)
 		{
 			System.out.println("Elevator e " + this.id + " is now idle");
+			if(state.getCurrentLocation().pList.size()!=0)
+				this.openDoors();
 			for(Floor f:floorList)
 			{
 				f.update();

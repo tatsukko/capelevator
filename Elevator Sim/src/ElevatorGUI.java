@@ -18,7 +18,7 @@ class ElevatorGUI extends JFrame implements ActionListener{
 
 	public JLabel jlFloor = new JLabel();
 	public JLabel jlElevator = new JLabel();
-	public jpElevator elevator = new jpElevator();
+	//public jpElevator elevator = new jpElevator();
   	public JPanel jpButton = new JPanel();
   	public JPanel jpTextField;
 	public Table jpTable = new Table();
@@ -58,7 +58,7 @@ class ElevatorGUI extends JFrame implements ActionListener{
 		splitPane.add(selection);
 		Container container = getContentPane();	
 		container.setLayout(new BorderLayout());
-		container.add(elevator, BorderLayout.WEST);
+		//container.add(elevator, BorderLayout.WEST);
 		container.add(splitPane, BorderLayout.EAST);
 		//container.add(selection, BorderLayout.SOUTH);
 		//container.add(jpTable, BorderLayout.EAST);
@@ -111,8 +111,8 @@ class ElevatorGUI extends JFrame implements ActionListener{
 		return jtfElevator.getText();
 	}
 */
-} //end of Elevator class
-class jpElevator extends JPanel{
+ //end of Elevator class
+/*class jpElevator extends JPanel{
 	public JButton up = new JButton("up");
 	public JButton down = new JButton("down");
 	private BufferedImage image_person;
@@ -151,7 +151,7 @@ class jpElevator extends JPanel{
         g2d.setColor(Color.BLACK);
         g2d.fillRect(30,400,50,50);
         g2d.drawLine(0,400,300,400);
-        */
+        
         
         g2d.clearRect(250,400,20,40);
         g.drawImage(image_person, 250, 400, null);
@@ -185,7 +185,7 @@ class jpElevator extends JPanel{
         add(jpButtons);
         */
     }
-} //end of jpElevator class
+ //end of jpElevator class*/
 class Selection extends JPanel{
 	public static int numFloors, numElevators, numPeople;
   	public JButton extra = new JButton("ExtraB");
@@ -245,7 +245,7 @@ class Selection extends JPanel{
     	            public void run() {
     	            	ElevatorGUI.esim = new ElevatorSim(Integer.parseInt((String)cFloor.getSelectedItem()),
     	    					Integer.parseInt((String)cElevator.getSelectedItem()),Integer.parseInt((String)cPerson.getSelectedItem()));
-    	            	ElevatorSim.egui.elevator.repaint();
+    	            	//ElevatorSim.egui.elevator.repaint();
     	    			ElevatorGUI.esim.controller.control();
     	    			System.out.println("Done");
     	            }
