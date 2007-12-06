@@ -26,8 +26,9 @@ class ElevatorGUI extends JFrame implements ActionListener{
   	public JTextField jtfFloor;
   	public JTextField jtfElevator;
   	public JButton apply = new JButton("Apply");
-  	public ArrayList<Elevator> elist;
+  	//public ArrayList<Elevator> elist;
   	public ArrayList<Floor> flist;
+  	public ArrayList<Person> pList;
   	public ElevatorSim esim;
   	
 	public ElevatorGUI() {
@@ -113,7 +114,7 @@ class jpElevator extends JPanel{
 	public JButton up = new JButton("up");
 	public JButton down = new JButton("down");
 	private BufferedImage image_person;
-	//public int x,y;
+	public Selection cFloor;
 	
 	public jpElevator(){
 		setPreferredSize(new Dimension(300,500));
@@ -132,44 +133,50 @@ class jpElevator extends JPanel{
         Graphics2D g2d = (Graphics2D)g;
         g2d.setColor(Color.WHITE);
         g2d.drawRect(0,0,300,500);
-        	
+        
         g2d.setColor(Color.DARK_GRAY);
         g2d.fillRect(30,0,50,500);
+        /*
         g2d.setColor(Color.BLACK);
         g2d.fillRect(30,400,50,50);
         g2d.drawLine(0,400,300,400);
+        */
         
-        g2d.clearRect(250, 400, 20, 40);
+        g2d.clearRect(250,400,20,40);
         g.drawImage(image_person, 250, 400, null);
         
-        //up.setPreferredSize(new Dimension(10,5));
-        //add(up);
-        //down.setPreferredSize(new Dimension(10,5));
-        //add(down);
+        //draw lines for floors/ceilings
+        int y1=400, y2=400, y3=400, y4=400;
+        for (int i = 1; i < 5; i++){ //i < Integer.parseInt((String)cFloor.getSelectedItem()
+        	g2d.drawLine(0,y1,300,y2);
+        	y1-=50;
+        	y2-=50;
+        }
         
-        /*int centerX = 5 / 2;  //getWidth()=5,getHeight()=10
-    	int hipsHeight = 10 / 3;
-    	int hipsY = 10 - hipsHeight;
-    	int neckY = hipsY - 10 / 3;
-    	int armsY = 10 - 10 / 2;
-    	int headX = 5 / 2 - 10 / 6;
-    
-    	g.setColor(Color.white);
-    	// draw legs
-    	g.drawLine(0, 10, centerX, hipsY);
-    	g.drawLine(centerX, hipsY, 5, 10);
-    	//draw torso
-    	g.drawLine(centerX, hipsY, centerX, neckY);
-    	// draw arms
-    	g.drawLine(0, armsY, 5, armsY);
-    	// draw head
-    	g.fillOval(headX, 0, 5/3, 10/3);
-    	*/
-
+        //when the elevator arrives on the floor
+        for (int i = 1; i <= 3; i++){ //i<=p.destination.floorNumber
+        	g2d.setColor(Color.BLACK);
+        	g2d.fillRect(30,y3,50,50);
+        	y3-=50;
+        	if (i>1){
+        		g2d.clearRect(30,y4,50,50);
+        		g2d.setColor(Color.DARK_GRAY);
+        		g2d.fillRect(30,y4,50,50);
+        		y4-=50;
+        	}
+        }
+        /*
+        JPanel jpButtons = new JPanel();
+        up.setPreferredSize(new Dimension(10,5));
+        jpButtons.add(up);
+        down.setPreferredSize(new Dimension(10,5));
+        jpButtons.add(down);
+        add(jpButtons);
+        */
     }
 } //end of jpElevator class
 class Selection extends JPanel{
-	public static int numFloors, numElevators;
+	public static int numFloors, numElevators, numPeople;
   	public JButton extra = new JButton("ExtraB");
   	public JButton apply = new JButton("Apply");
   	public ElevatorSim esim;
@@ -178,10 +185,13 @@ class Selection extends JPanel{
 		setPreferredSize(new Dimension(200,100));
         setBackground(Color.white);
 		String[] floor = { "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+		//Integer[] floor = {1,2,3,4,5,6,7,8,0};
 		String[] elevator = { "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+		String[] person = { "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
 		final JComboBox cFloor = new JComboBox(floor);
 		final JComboBox cElevator = new JComboBox(elevator);
+		final JComboBox cPerson = new JComboBox(person);
         	//JPanel controlPane = new JPanel();
 
         cFloor.setSelectedIndex(0);
@@ -199,12 +209,21 @@ class Selection extends JPanel{
                 		numElevators=Integer.parseInt(num);
             		}
         	});*/
+        cPerson.setSelectedIndex(0);
+              /*  cPerson.addActionListener(new ActionListener() {
+            		public void actionPerformed(ActionEvent e) {
+                		String num = (String)cElevator.getSelectedItem();
+                		numElevators=Integer.parseInt(num);
+            		}
+        	});*/
 
-		setLayout(new GridLayout(3,2));
+		setLayout(new GridLayout(4,2));
 		add(new JLabel("# of Floors:"));
         add(cFloor);
 		add(new JLabel("# of Elevators:"));
         add(cElevator);
+        add(new JLabel("# of Riders:"));
+        add(cPerson);
 		//add(extra);
 		add(apply);
 		apply.addActionListener(new ActionListener() {
