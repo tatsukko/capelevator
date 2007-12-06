@@ -77,6 +77,7 @@ public class Floor {
 					pList.remove(p);
 					p.enter();
 					i--;
+					p.current=e;
 					p.state = Person.ELEVATOR;
 					e.pList.add(p);
 					if(!e.getFloorsRequested().contains(p.destination))
@@ -95,6 +96,7 @@ public class Floor {
 					pList.remove(p);
 					p.enter();
 					i--;
+					p.current=e;
 					p.state = Person.ELEVATOR;
 					e.pList.add(p);
 					if(!e.getFloorsRequested().contains(p.destination))
@@ -119,6 +121,8 @@ public class Floor {
 	//Get all the people on the floor to either exit, press up, or press down
 	public void update()
 	{
+		if(pList.size()==0)
+			return;
 		for(int i = 0; i < pList.size(); i++)
 		{
 			Person p = pList.get(i);

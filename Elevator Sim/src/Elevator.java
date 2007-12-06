@@ -139,7 +139,6 @@ public class Elevator {
 		}
 		else
 		{
-			sb.append("\n");
 			for(Person p:pList)
 			{
 				sb.append("\n\t"+p.toString());

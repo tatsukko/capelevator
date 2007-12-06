@@ -24,7 +24,7 @@ public class Person {
 	public void enter()
 	{
 		enter=System.currentTimeMillis();
-		System.out.println("enter " + id);
+		//System.out.println("enter " + id);
 	}
 	public void exit()
 	{
@@ -36,8 +36,18 @@ public class Person {
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append((state==FLOOR?"Person at floor " + ((Floor)current).floorNumber:
-			"Person in elevator " + ((Elevator)current).id)+ " heading to " + destination.floorNumber);
+		if(current.getClass().getName().equals(Floor.class.getName()))
+		{
+			sb.append("Person at floor " + ((Floor)current).floorNumber);
+		}
+		else if(current.getClass().getName().equals(Elevator.class.getName()))
+		{
+			sb.append("Person in elevator " + ((Elevator)current).id + " heading to " + destination.floorNumber);
+		}
+		else
+		{
+			System.out.println("Lost person");
+		}
 		return sb.toString();
 	}
 }

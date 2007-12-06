@@ -255,6 +255,7 @@ class Selection extends JPanel{
     	            	//ElevatorSim.egui.elevator.repaint();
     	    			ElevatorGUI.esim.controller.control();
     	    			System.out.println("Done");
+    	    			ElevatorGUI.esim.egui.repaint();
     	            }
     	        });
     		}
