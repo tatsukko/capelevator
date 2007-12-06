@@ -131,7 +131,19 @@ public class Elevator {
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("Elevator id " + id );
-		return sb.toString();
+		if(pList.size()==0)
+		{
+			return sb.toString();
+		}
+		else
+		{
+			sb.append("\n");
+			for(Person p:pList)
+			{
+				sb.append("\n\t"+p.toString());
+			}
+		}
+		return sb.toString();	
 	}
 }
 
