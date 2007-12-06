@@ -40,6 +40,10 @@ public class ElevatorController {
 	}
 	void downPressed()
 	{
+		if(flist.get((int)event.token.attr[0]-1).pList.size()==0)
+		{
+			return;
+		}
 		System.out.println("Down pressed on floor " + event.token.attr[0]);
 		Elevator selected = null;
 		for(Elevator e:elist)
@@ -58,6 +62,23 @@ public class ElevatorController {
 				break;
 			}
 		}
+		if(selected == null)
+		{
+			int distance = Integer.MAX_VALUE;
+			for(Elevator e:elist)
+			{
+				if(e.getCurrentState().directionState == ElevatorState.DirectionState.GOINGDOWN)
+				{
+					if(e.getCurrentState().getCurrentDestination().floorNumber>event.token.attr[0]&&
+							e.getCurrentState().getCurrentDestination().floorNumber-event.token.attr[0]<distance)
+					{
+						distance = (int)(e.getCurrentState().getCurrentDestination().floorNumber-event.token.attr[0]);
+						selected = e;
+					}
+				}
+				
+			}
+		}
 		if(selected!=null)
 		{
 			selected.goTo(flist.get((int)event.token.attr[0]-1));
@@ -66,6 +87,10 @@ public class ElevatorController {
 	}
 	void upPressed()
 	{
+		if(flist.get((int)event.token.attr[0]-1).pList.size()==0)
+		{
+			return;
+		}
 		System.out.println("Up pressed on floor " + event.token.attr[0]);
 		Elevator selected = null;
 		for(Elevator e:elist)
@@ -84,10 +109,28 @@ public class ElevatorController {
 				break;
 			}
 		}
+		if(selected == null)
+		{
+			int distance = Integer.MAX_VALUE;
+			for(Elevator e:elist)
+			{
+				if(e.getCurrentState().directionState == ElevatorState.DirectionState.GOINGUP)
+				{
+					if(e.getCurrentState().getCurrentDestination().floorNumber<event.token.attr[0]&&
+							e.getCurrentState().getCurrentDestination().floorNumber-event.token.attr[0]<distance)
+					{
+						distance = (int)(e.getCurrentState().getCurrentDestination().floorNumber-event.token.attr[0]);
+						selected = e;
+					}
+				}
+				
+			}
+		}
 		if(selected!=null)
 		{
 			selected.goTo(flist.get((int)event.token.attr[0]-1));
-			selected.update();
+			for(Elevator e2:elist)
+				e2.update();
 		}
 	}
 	
