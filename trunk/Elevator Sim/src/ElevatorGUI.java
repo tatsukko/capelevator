@@ -44,8 +44,8 @@ class ElevatorGUI extends JFrame implements ActionListener{
 		//apply.addActionListener(this);
 
 		//elevator.setBackground(Color.white);
-        	JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-        	splitPane.add(jpTable);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        splitPane.add(jpTable);
 		splitPane.add(selection);
 		Container container = getContentPane();	
 		container.setLayout(new BorderLayout());
@@ -63,7 +63,7 @@ class ElevatorGUI extends JFrame implements ActionListener{
         //Create the GUI window.
         ElevatorGUI gui = new ElevatorGUI();
         gui.setSize(700,500);
-	gui.setVisible(true);
+		gui.setVisible(true);
     }
 
     public static void main(String[] args) {
@@ -85,6 +85,12 @@ class ElevatorGUI extends JFrame implements ActionListener{
 		jmFile.add(jmiQuit);
 		setJMenuBar(jmbMenu);
 		jmiQuit.addActionListener(this);
+
+		jmiQuit.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		System.exit(0);
+        	}
+		});
   	}
 /*
 	public int getNumFloors(){
@@ -97,17 +103,31 @@ class ElevatorGUI extends JFrame implements ActionListener{
 */
 } //end of Elevator class
 class jpElevator extends JPanel{
+	public JButton up = new JButton("up");
+	public JButton down = new JButton("down");
+	
 	public jpElevator(){
 		setPreferredSize(new Dimension(300,500));
-        	setBackground(Color.gray);
+        setBackground(Color.gray);
 	}
 	
 	public void paintComponent(Graphics g) {
-        	super.paintComponent(g);
-        	Graphics2D g2d = (Graphics2D)g;
-        	g2d.setColor(Color.WHITE);
-        	g2d.drawRect(0,0,300,500);
-    	}
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D)g;
+        g2d.setColor(Color.WHITE);
+        g2d.drawRect(0,0,300,500);
+        	
+        g2d.setColor(Color.DARK_GRAY);
+        g2d.fillRect(30,0,50,500);
+        g2d.setColor(Color.BLACK);
+        g2d.fillRect(30,400,50,50);
+        g2d.drawLine(0,400,300,400);
+        //up.setPreferredSize(new Dimension(10,5));
+        //add(up);
+        //down.setPreferredSize(new Dimension(10,5));
+        //add(down);
+
+    }
 } //end of jpElevator class
 class Selection extends JPanel{
 	public static int numFloors, numElevators;
@@ -116,7 +136,7 @@ class Selection extends JPanel{
 	public Selection(){
 		//super(new BorderLayout());
 		setPreferredSize(new Dimension(200,100));
-        	setBackground(Color.white);
+        setBackground(Color.white);
 		String[] floor = { "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 		String[] elevator = { "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
@@ -124,8 +144,8 @@ class Selection extends JPanel{
 		final JComboBox cElevator = new JComboBox(elevator);
         	//JPanel controlPane = new JPanel();
 
-        	cFloor.setSelectedIndex(0);
-        	cFloor.addActionListener(new ActionListener() {
+        cFloor.setSelectedIndex(0);
+        cFloor.addActionListener(new ActionListener() {
             		public void actionPerformed(ActionEvent e) {
                 		String num = (String)cFloor.getSelectedItem();
                 		if (num.equals("1"))
@@ -152,7 +172,7 @@ class Selection extends JPanel{
         	});
 
 		cElevator.setSelectedIndex(0);
-        	cElevator.addActionListener(new ActionListener() {
+        cElevator.addActionListener(new ActionListener() {
             		public void actionPerformed(ActionEvent e) {
                 		String num = (String)cElevator.getSelectedItem();
                 		if (num.equals("1"))
@@ -180,9 +200,9 @@ class Selection extends JPanel{
 
 		setLayout(new GridLayout(3,2));
 		add(new JLabel("# of Floors:"));
-        	add(cFloor);
+        add(cFloor);
 		add(new JLabel("# of Elevators:"));
-        	add(cElevator);
+        add(cElevator);
 		add(extra);
 		add(apply);
 
