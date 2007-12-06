@@ -48,7 +48,7 @@ public class ElevatorSim {
 			System.out.println(floor);
 		}
 		System.out.println("---------------------");
-		
+		egui.update();
 		controller = new ElevatorController(elist, flist);
 	}
 	
@@ -56,5 +56,18 @@ public class ElevatorSim {
 	{
 		egui = ElevatorGUI.createGUI();
 		
+	}
+	public String toString()
+	{
+		String s="";
+		for(Elevator elevator:elist)
+		{
+			s+=(elevator.toString())+"\n";
+		}
+		for(Floor floor:flist)
+		{
+			s+=floor+"\n";
+		}
+		return s;
 	}
 }

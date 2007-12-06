@@ -141,6 +141,7 @@ public class ElevatorController {
 	
 	void elevatorArrived()
 	{
+		ElevatorSim.egui.update();
 		System.out.println("---------------------");
 		elist.get((int)event.token.attr[0]-1).getCurrentState().setCurrentLocation(
 				flist.get((int)event.token.attr[1]-1));
@@ -151,6 +152,7 @@ public class ElevatorController {
 	
 	void elevatorLeft()
 	{
+		ElevatorSim.egui.update();
 		System.out.println("---------------------");
 		System.out.print("elevator left " + event.token.attr[0]);
 		System.out.println(" current location is " + elist.get((int)event.token.attr[0]-1).getCurrentFloor().floorNumber);
