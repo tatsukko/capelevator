@@ -29,9 +29,10 @@ class ElevatorGUI extends JFrame implements ActionListener{
   	//public ArrayList<Elevator> elist;
   	public ArrayList<Floor> flist;
   	public ArrayList<Person> pList;
-  	public ElevatorSim esim;
+  	public static ElevatorSim esim;
   	
 	public ElevatorGUI() {
+		ElevatorSim.egui=this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addMenu(); //sets up the file menu
 		setTitle("Elevator Simulator");
@@ -67,11 +68,12 @@ class ElevatorGUI extends JFrame implements ActionListener{
   		System.out.println("Action Performed");
 	}
 	
-    private static void createGUI() {
+    public static ElevatorGUI createGUI() {
         //Create the GUI window.
         ElevatorGUI gui = new ElevatorGUI();
-        gui.setSize(700,500);
+        gui.setSize(725,550);
 		gui.setVisible(true);
+		return gui;
     }
 
     public static void main(String[] args) {
@@ -118,7 +120,7 @@ class jpElevator extends JPanel{
 	
 	public jpElevator(){
 		setPreferredSize(new Dimension(300,500));
-        setBackground(Color.gray);
+        setBackground(Color.WHITE);
         BufferedImage img = null;
 		try {
 			File f = new File("person.gif");
@@ -131,11 +133,20 @@ class jpElevator extends JPanel{
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D)g;
-        g2d.setColor(Color.WHITE);
-        g2d.drawRect(0,0,300,500);
+        System.out.println("Printing GUI " + ElevatorGUI.esim);
+        if(ElevatorGUI.esim==null)
+        {
+        	return;
+        }
+        int elevators = ElevatorGUI.esim.elist.size();
+        int floors = ElevatorGUI.esim.flist.size();
         
-        g2d.setColor(Color.DARK_GRAY);
-        g2d.fillRect(30,0,50,500);
+        for(int i = 0; i < floors; i++)
+        {
+        	g2d.drawLine(0, i*500/4, 300, i*500/4);
+        }
+        if(true)
+        	return;
         /*
         g2d.setColor(Color.BLACK);
         g2d.fillRect(30,400,50,50);
@@ -179,8 +190,7 @@ class Selection extends JPanel{
 	public static int numFloors, numElevators, numPeople;
   	public JButton extra = new JButton("ExtraB");
   	public JButton apply = new JButton("Apply");
-  	public ElevatorSim esim;
-	public Selection(){
+  	public Selection(){
 		//super(new BorderLayout());
 		setPreferredSize(new Dimension(200,100));
         setBackground(Color.white);
@@ -228,9 +238,18 @@ class Selection extends JPanel{
 		add(apply);
 		apply.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
-    			esim = new ElevatorSim(Integer.parseInt((String)cFloor.getSelectedItem()),
-    					Integer.parseInt((String)cElevator.getSelectedItem()),3*Integer.parseInt((String)cFloor.getSelectedItem()));
-    			esim.controller.control();
+    			while (Table.model.getRowCount()>0){
+    				Table.model.removeRow(0);
+    				}
+    			javax.swing.SwingUtilities.invokeLater(new Runnable() {
+    	            public void run() {
+    	            	ElevatorGUI.esim = new ElevatorSim(Integer.parseInt((String)cFloor.getSelectedItem()),
+    	    					Integer.parseInt((String)cElevator.getSelectedItem()),Integer.parseInt((String)cPerson.getSelectedItem()));
+    	            	ElevatorSim.egui.elevator.repaint();
+    	    			ElevatorGUI.esim.controller.control();
+    	    			System.out.println("Done");
+    	            }
+    	        });
     		}
 
 		});

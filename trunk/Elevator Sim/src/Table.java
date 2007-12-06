@@ -1,5 +1,6 @@
 
 	import javax.swing.JFrame;
+	import javax.swing.table.*;
 	import javax.swing.JPanel;
 	import javax.swing.JScrollPane;
 	import javax.swing.JTable;
@@ -10,20 +11,19 @@
 
 	public class Table extends JPanel {
 	    private boolean DEBUG = false;
-
+	    public static DefaultTableModel model;
 	    public Table() {
 	        super(new GridLayout(1,0));
+	        model = new DefaultTableModel();
+	        final JTable table = new JTable(model);
+	        model.addColumn("Person number");
+	        model.addColumn("Start Floor");
+	        model.addColumn("End Floor");
+	        model.addColumn("Wait for elevator");
+	        model.addColumn("Traveling time");
+	        model.addColumn("Total wait time");
+	        
 
-	        String[] columnNames = {"Elevator #",
-	                                "Travel Time",
-	                                "# of floors traveled"};
-
-	        Object[][] data = {
-	            {"1", "00:00", "0"},
-	            {"2", "00:00", "0"}
-	        };
-
-	        final JTable table = new JTable(data, columnNames);
 	        table.setPreferredScrollableViewportSize(new Dimension(400, 300));
 	        table.setFillsViewportHeight(true);
 

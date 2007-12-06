@@ -13,7 +13,7 @@ public class ElevatorController {
 	{
 		for(Floor f:flist)
 			f.update();
-		while(true)
+		do
 		{
 			event = Sim.next_event(System.currentTimeMillis(), Const.SYNC);
 			switch(event.id){
@@ -36,7 +36,8 @@ public class ElevatorController {
 				break;
 			
 			}
-		}
+		}while(Sim.heap_count!=0);
+		return;
 	}
 	void downPressed()
 	{
@@ -59,7 +60,6 @@ public class ElevatorController {
 			if(e.getCurrentState().directionState==ElevatorState.DirectionState.IDLE)
 			{
 				selected = e;
-				break;
 			}
 		}
 		if(selected == null)
